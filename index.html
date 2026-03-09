@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♻️ GreenCycle - E-Waste Collection Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #00ff88;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-logo span { color: #fff; }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover { color: #00ff88; }
+
+        .nav-btn {
+            padding: 10px 22px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000 !important;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #00ff88;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 40px 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-bg .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: floatBg 8s ease-in-out infinite;
+        }
+
+        .hero-bg .circle:nth-child(1) {
+            width: 400px; height: 400px;
+            background: #00ff88;
+            top: -100px; right: -100px;
+        }
+
+        .hero-bg .circle:nth-child(2) {
+            width: 300px; height: 300px;
+            background: #0088ff;
+            bottom: -50px; left: -50px;
+            animation-delay: 2s;
+        }
+
+        .hero-bg .circle:nth-child(3) {
+            width: 200px; height: 200px;
+            background: #ff6600;
+            top: 50%; left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatBg {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 850px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #00ff88;
+            margin-bottom: 25px;
+            animation: fadeDown 1s ease;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            animation: fadeUp 1s ease;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: #999;
+            margin-bottom: 35px;
+            line-height: 1.8;
+            animation: fadeUp 1.2s ease;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 1.4s ease;
+        }
+
+        .btn-primary {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.35);
+        }
+
+        .btn-secondary {
+            padding: 15px 35px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            border-color: #00ff88;
+            color: #00ff88;
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 55px;
+            animation: fadeUp 1.6s ease;
+            flex-wrap: wrap;
+        }
+
+        .stat-item { text-align: center; }
+
+        .stat-number {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #00ff88;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            color: #777;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ===== ABOUT ===== */
+        .about-section {
+            padding: 90px 40px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+            padding: 35px 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, #00ff88, #0088ff);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .about-card:hover::before { opacity: 1; }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-icon {
+            width: 55px; height: 55px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 18px;
+        }
+
+        .about-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .about-card p {
+            color: #888;
+            line-height: 1.7;
+            font-size: 0.92rem;
+        }
+
+        /* ===== IMPACT ===== */
+        .impact-section {
+            padding: 80px 40px;
+            background: linear-gradient(180deg, rgba(0, 255, 136, 0.015), transparent);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .impact-card {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 22px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            background: rgba(0, 255, 136, 0.04);
+            border-color: rgba(0, 255, 136, 0.15);
+        }
+
+        .impact-emoji { font-size: 2rem; flex-shrink: 0; }
+
+        .impact-card h4 { font-size: 1.05rem; margin-bottom: 5px; }
+        .impact-card p { color: #777; font-size: 0.9rem; line-height: 1.6; }
+
+        /* ===== CATEGORIES ===== */
+        .categories-section { padding: 90px 40px; }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 28px 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            background: rgba(0, 255, 136, 0.07);
+            border-color: rgba(0, 255, 136, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .category-icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .category-card h4 { font-size: 0.85rem; font-weight: 600; color: #ccc; }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-section {
+            padding: 90px 40px;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.015), transparent);
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .step-card {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 35px 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 55px; height: 55px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #000;
+            margin: 0 auto 18px;
+        }
+
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .step-card p { color: #777; font-size: 0.88rem; line-height: 1.6; }
+
+        .step-arrow {
+            position: absolute;
+            top: 60px;
+            right: -18px;
+            font-size: 1.3rem;
+            color: #00ff88;
+        }
+
+        /* ===== FORM ===== */
+        .form-section {
+            padding: 90px 40px;
+        }
+
+        .form-container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 22px;
+            padding: 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(90deg, #00ff88, #0088ff, #00ff88);
+        }
+
+        .form-group { margin-bottom: 22px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: #ccc;
+            font-size: 0.93rem;
+        }
+
+        .required { color: #ff4444; }
+
+        .form-input {
+            width: 100%;
+            padding: 13px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 11px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .form-input::placeholder { color: #555; }
+
+        textarea.form-input { resize: vertical; min-height: 90px; }
+
+        select.form-input {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300ff88' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+
+        select.form-input option { background: #1a1a1a; color: #fff; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.04);
+        }
+
+        .checkbox-item input[type="checkbox"] { display: none; }
+
+        .checkmark {
+            width: 20px; height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkmark::after {
+            content: '✓';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: none;
+        }
+
+        .checkbox-item input:checked + .checkmark {
+            background: #00ff88;
+            border-color: #00ff88;
+        }
+
+        .checkbox-item input:checked + .checkmark::after { display: block; }
+        .checkbox-item input:checked ~ .checkbox-label { color: #00ff88; }
+
+        .checkbox-label {
+            font-size: 0.83rem;
+            color: #aaa;
+            transition: color 0.3s ease;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border: none;
+            border-radius: 11px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(0, 255, 136, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== CONNECTION STATUS ===== */
+        .connection-status {
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .connection-status.connected {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .connection-status.disconnected {
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.2);
+        }
+
+        .connection-status.checking {
+            background: rgba(255, 165, 0, 0.1);
+            color: #ffa500;
+            border: 1px solid rgba(255, 165, 0, 0.2);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(145deg, #1a1a1a, #111);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 22px;
+            padding: 45px;
+            text-align: center;
+            max-width: 480px;
+            width: 92%;
+            animation: modalPop 0.4s ease;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon { font-size: 3.5rem; margin-bottom: 18px; }
+        .modal h2 { color: #00ff88; margin-bottom: 8px; font-size: 1.5rem; }
+        .modal p { color: #888; margin-bottom: 5px; font-size: 0.95rem; }
+
+        .modal-id {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 0.93rem;
+            border: none;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-btn:hover { transform: translateY(-2px); }
+
+        /* ===== ADMIN ===== */
+        .admin-section {
+            display: none;
+            padding: 100px 40px 60px;
+            min-height: 100vh;
+        }
+
+        .admin-section.active { display: block; }
+
+        .admin-login {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .admin-login .lock-icon { font-size: 3rem; margin-bottom: 15px; }
+        .admin-login h2 { margin-bottom: 8px; font-size: 1.7rem; }
+        .admin-login p { color: #777; margin-bottom: 22px; }
+
+        .error-msg {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-msg.show { display: block; }
+
+        .admin-dashboard {
+            display: none;
+            max-width: 1350px;
+            margin: 0 auto;
+        }
+
+        .admin-dashboard.active { display: block; }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-header h2 { font-size: 1.8rem; }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .dash-stat {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .dash-stat .stat-icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .dash-stat .stat-val { font-size: 1.8rem; font-weight: 800; color: #00ff88; }
+        .dash-stat .stat-lbl { color: #777; font-size: 0.82rem; }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .table-header h3 { font-size: 1.1rem; }
+
+        .search-box {
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .search-box:focus { outline: none; border-color: #00ff88; }
+
+        .data-table { width: 100%; border-collapse: collapse; }
+
+        .data-table thead th {
+            padding: 13px 18px;
+            text-align: left;
+            font-weight: 600;
+            color: #00ff88;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0, 255, 136, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.2s ease;
+        }
+
+        .data-table tbody tr:hover { background: rgba(0, 255, 136, 0.03); }
+
+        .data-table tbody td {
+            padding: 12px 18px;
+            font-size: 0.88rem;
+            color: #ccc;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.73rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending { background: rgba(255, 165, 0, 0.15); color: #ffa500; }
+        .status-collected { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
+
+        .action-btn {
+            padding: 5px 11px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            background: transparent;
+            color: #00ff88;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            margin-right: 4px;
+            margin-bottom: 3px;
+        }
+
+        .action-btn:hover { background: rgba(0, 255, 136, 0.1); }
+
+        .action-btn.delete {
+            border-color: rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        .action-btn.delete:hover { background: rgba(255, 68, 68, 0.1); }
+
+        .logout-btn {
+            padding: 10px 22px;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover { background: rgba(255, 68, 68, 0.2); }
+
+        .no-data {
+            text-align: center;
+            padding: 50px;
+            color: #555;
+        }
+
+        .no-data .emoji { font-size: 2.5rem; margin-bottom: 12px; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 55px 40px 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 35px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-brand h3 { font-size: 1.4rem; color: #00ff88; margin-bottom: 10px; }
+        .footer-brand p { color: #666; line-height: 1.7; font-size: 0.88rem; }
+        .footer-col h4 { margin-bottom: 14px; font-size: 0.95rem; }
+
+        .footer-col a {
+            display: block;
+            color: #666;
+            text-decoration: none;
+            padding: 4px 0;
+            font-size: 0.88rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover { color: #00ff88; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            color: #444;
+            font-size: 0.83rem;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            padding: 14px 22px;
+            border-radius: 11px;
+            font-weight: 600;
+            z-index: 3000;
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            font-size: 0.92rem;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        .toast.success {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+
+        .toast.error {
+            background: rgba(255, 68, 68, 0.15);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        /* ===== SPINNER ===== */
+        .spinner {
+            display: inline-block;
+            width: 18px; height: 18px;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .categories-grid { grid-template-columns: repeat(3, 1fr); }
+            .about-grid { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 12px 18px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 55px; left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                padding: 18px;
+                gap: 12px;
+                border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            }
+
+            .hero { padding: 100px 18px 60px; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 0.95rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-stats { gap: 25px; }
+            .stat-number { font-size: 1.7rem; }
+
+            .about-grid, .impact-grid { grid-template-columns: 1fr; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-container { flex-direction: column; }
+            .step-arrow { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .checkbox-group { grid-template-columns: 1fr; }
+            .form-container { padding: 28px 18px; }
+
+            .form-section, .about-section, .categories-section,
+            .how-section, .impact-section { padding: 60px 18px; }
+
+            .section-title { font-size: 1.8rem; }
+            .footer-content { grid-template-columns: 1fr; }
+            .dashboard-stats { grid-template-columns: 1fr 1fr; }
+            .dashboard-header { flex-direction: column; gap: 12px; }
+            .data-table { font-size: 0.72rem; }
+            .data-table thead th, .data-table tbody td { padding: 8px 6px; }
+            .modal { padding: 28px 18px; }
+            .modal-buttons { flex-direction: column; }
+            .admin-section { padding: 80px 18px 40px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.7rem; }
+            .hero-stats { flex-direction: column; gap: 15px; }
+            .categories-grid { grid-template-columns: 1fr 1fr; }
+            .dashboard-stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a class="nav-logo" onclick="showMain()">♻️ Green<span>Cycle</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="showMain()">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#collect" class="nav-btn">🚀 Submit E-Waste</a></li>
+            <li><a href="javascript:void(0)" onclick="showAdmin()" style="color:#ffa500;">🔐 Admin</a></li>
+        </ul>
+        <button class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- MAIN -->
+    <main id="mainContent">
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-bg">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-badge">🌍 India's Smart E-Waste Collection Platform</div>
+                <h1 class="hero-title">
+                    Don't Dump It.<br>
+                    <span class="highlight">Recycle It With Us!</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Every year, <strong>50 million tonnes</strong> of e-waste is generated globally.
+                    Join GreenCycle to responsibly dispose your electronic waste and help
+                    save the planet. We collect from your doorstep — <strong style="color:#00ff88;">FREE!</strong>
+                </p>
+                <div class="hero-buttons">
+                    <a href="#collect" class="btn-primary">♻️ Submit E-Waste Now</a>
+                    <a href="#about" class="btn-secondary">📖 Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="counterTons">0</div>
+                        <div class="stat-label">Tonnes Collected</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="counterUsers">0</div>
+                        <div class="stat-label">Happy Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="counterCities">0</div>
+                        <div class="stat-label">Cities Covered</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="about-section" id="about">
+            <div class="section-header">
+                <div class="section-tag">About Us</div>
+                <h2 class="section-title">What is <span class="highlight">E-Waste</span>?</h2>
+                <p class="section-subtitle">E-waste refers to discarded electronic devices containing toxic materials that harm the environment.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card fade-in">
+                    <div class="about-icon">🌍</div>
+                    <h3>Environmental Crisis</h3>
+                    <p>Over 50 million tonnes of e-waste generated annually. Only 20% gets properly recycled. The rest pollutes soil, water and air.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">☠️</div>
+                    <h3>Toxic Materials</h3>
+                    <p>E-waste contains lead, mercury, cadmium and brominated flame retardants that cause cancer, organ damage and birth defects.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">♻️</div>
+                    <h3>Our Solution</h3>
+                    <p>GreenCycle provides doorstep collection, proper segregation and certified recycling to ensure zero e-waste reaches landfills.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">💰</div>
+                    <h3>Valuable Resources</h3>
+                    <p>1 tonne of circuit boards contains 40-800x more gold than 1 tonne of ore. Recycling recovers copper, gold, silver & rare metals.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">📊</div>
+                    <h3>India's E-Waste</h3>
+                    <p>India generates 3.2 million tonnes of e-waste annually — 3rd largest generator globally. Only 5% is formally recycled.</p>
+                </div>
+                <div class="about-card fade-in">
+                    <div class="about-icon">🤝</div>
+                    <h3>Join The Mission</h3>
+                    <p>Submit your e-waste to create jobs, reduce pollution and build a sustainable circular economy for India's future.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPACT -->
+        <section class="impact-section">
+            <div class="section-header">
+                <div class="section-tag">Impact</div>
+                <h2 class="section-title">The <span style="color:#ff4444">Harmful Effects</span></h2>
+                <p class="section-subtitle">Why proper e-waste disposal is critical for our planet and health</p>
+            </div>
+            <div class="impact-grid">
+                <div class="impact-card fade-in">
+                    <div class="impact-emoji">🏭</div>
+                    <div>
+                        <h4>Air Pollution</h4>
+                        <p>Burning e-waste releases dioxins & furans — toxic pollutants causing respiratory diseases and cancer.</p>
+                    </div>
+                </div>
+                <div class="impact-card fade-in">
+                    <div class="impact-emoji">💧</div>
+                    <div>
+                        <h4>Water Contamination</h4>
+                        <p>Heavy metals leach into groundwater, contaminating drinking water for millions of people.</p>
+                    </div>
+                </div>
+                <div class="impact-card fade-in">
+                    <div class="impact-emoji">🌱</div>
+                    <div>
+                        <h4>Soil Degradation</h4>
+                        <p>Toxic substances destroy soil microorganisms, making land infertile and entering the food chain.</p>
+                    </div>
+                </div>
+                <div class="impact-card fade-in">
+                    <div class="impact-emoji">👶</div>
+                    <div>
+                        <h4>Health Hazards</h4>
+                        <p>Children in e-waste areas show higher rates of DNA damage, learning disabilities and organ problems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="categories-section" id="categories">
+            <div class="section-header">
+                <div class="section-tag">Categories</div>
+                <h2 class="section-title">What We <span class="highlight">Collect</span></h2>
+                <p class="section-subtitle">We accept all types of electronic waste for proper recycling</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card fade-in"><div class="category-icon">📱</div><h4>Mobile Phones</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">💻</div><h4>Laptops</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🖥️</div><h4>Desktops</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">📺</div><h4>Televisions</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🖨️</div><h4>Printers</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">⌨️</div><h4>Keyboards</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🔋</div><h4>Batteries</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🔌</div><h4>Chargers</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🎧</div><h4>Audio Devices</h4></div>
+                <div class="category-card fade-in"><div class="category-icon">🔧</div><h4>Circuit Boards</h4></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section" id="how">
+            <div class="section-header">
+                <div class="section-tag">Process</div>
+                <h2 class="section-title">How It <span class="highlight">Works</span></h2>
+                <p class="section-subtitle">Simple 4-step process to recycle your e-waste</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Fill the Form</h3>
+                    <p>Enter your details and select the type of e-waste you want to dispose.</p>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">2</div>
+                    <h3>Get Confirmation</h3>
+                    <p>Receive a PDF receipt with your unique request ID and submission details.</p>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">3</div>
+                    <h3>Doorstep Pickup</h3>
+                    <p>Our team will visit your address and collect the e-waste from your doorstep.</p>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">4</div>
+                    <h3>Safe Recycling</h3>
+                    <p>E-waste is sent to certified recyclers for proper and safe recycling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORM -->
+        <section class="form-section" id="collect">
+            <div class="section-header">
+                <div class="section-tag">Submit</div>
+                <h2 class="section-title">Submit Your <span class="highlight">E-Waste</span></h2>
+                <p class="section-subtitle">Fill in your details and we'll arrange a doorstep pickup</p>
+            </div>
+            <div class="form-container">
+                <!-- Connection Status -->
+                <div class="connection-status checking" id="connectionStatus">
+                    ⏳ Checking Firebase connection...
+                </div>
+
+                <form id="ewasteForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" class="form-input" id="phone" placeholder="10-digit number" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address <span class="required">*</span></label>
+                        <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Address <span class="required">*</span></label>
+                        <textarea class="form-input" id="address" placeholder="Enter complete address with landmarks" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="city" placeholder="Your city" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="pincode" placeholder="6-digit pincode" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Pickup Date <span class="required">*</span></label>
+                        <input type="date" class="form-input" id="pickupDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>E-Waste Category <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Mobile Phones">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">📱 Mobile Phones</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Laptops/Computers">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">💻 Laptops/Computers</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Televisions">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">📺 Televisions</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Printers/Scanners">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🖨️ Printers/Scanners</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Keyboards/Mouse">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">⌨️ Keyboards/Mouse</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Batteries">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🔋 Batteries</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Chargers/Adapters">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🔌 Chargers/Adapters</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Audio Devices">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🎧 Audio Devices</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Monitors">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🖥️ Monitors</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="category" value="Circuit Boards">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">🔧 Circuit Boards</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Approximate Quantity</label>
+                        <select class="form-input" id="quantity">
+                            <option value="1-5 items">1 - 5 items</option>
+                            <option value="5-10 items">5 - 10 items</option>
+                            <option value="10-25 items">10 - 25 items</option>
+                            <option value="25+ items">25+ items</option>
+                            <option value="Bulk 50+">Bulk (50+ items)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea class="form-input" id="notes" placeholder="Any special instructions..." rows="3"></textarea>
+                    </div>
+
+                    <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+                        ♻️ Submit E-Waste Request
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>♻️ GreenCycle</h3>
+                    <p>India's trusted e-waste collection and recycling platform. Together, let's build a cleaner, greener future.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#categories">Categories</a>
+                    <a href="#collect">Submit E-Waste</a>
+                </div>
+                <div class="footer-col">
+                    <h4>E-Waste Types</h4>
+                    <a href="#">Mobile Phones</a>
+                    <a href="#">Laptops</a>
+                    <a href="#">Batteries</a>
+                    <a href="#">Circuit Boards</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="#">📧 info@greencycle.in</a>
+                    <a href="#">📞 +91 98765 43210</a>
+                    <a href="#">📍 Chennai, Tamil Nadu</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 GreenCycle. All rights reserved. Built with 💚 for a better planet.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- ADMIN -->
+    <section class="admin-section" id="adminSection">
+        <div class="admin-login" id="adminLogin">
+            <div class="lock-icon">🔐</div>
+            <h2>Admin Login</h2>
+            <p>Enter password to access dashboard</p>
+            <div class="form-group">
+                <input type="password" class="form-input" id="adminPassword" placeholder="Enter admin password"
+                    onkeypress="if(event.key==='Enter') loginAdmin()">
+            </div>
+            <button class="submit-btn" onclick="loginAdmin()" style="margin-top:0">🔓 Login</button>
+            <div class="error-msg" id="loginError">❌ Incorrect password!</div>
+            <br><br>
+            <a href="javascript:void(0)" onclick="showMain()" style="color:#00ff88; text-decoration:none;">← Back to Home</a>
+        </div>
+
+        <div class="admin-dashboard" id="adminDashboard">
+            <div class="dashboard-header">
+                <div>
+                    <h2>📊 Admin Dashboard</h2>
+                    <p style="color:#777;">Manage e-waste collection requests</p>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="nav-btn" onclick="loadAdminData()" style="font-size:0.88rem;">🔄 Refresh</button>
+                    <button class="logout-btn" onclick="logoutAdmin()">🚪 Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="dash-stat">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-val" id="totalRequests">0</div>
+                    <div class="stat-lbl">Total Requests</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-val" id="pendingRequests">0</div>
+                    <div class="stat-lbl">Pending</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-val" id="collectedRequests">0</div>
+                    <div class="stat-lbl">Collected</div>
+                </div>
+                <div class="dash-stat">
+                    <div class="stat-icon">🏙️</div>
+                    <div class="stat-val" id="totalCities">0</div>
+                    <div class="stat-lbl">Cities</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>📋 All Submissions</h3>
+                    <input type="text" class="search-box" placeholder="🔍 Search..." oninput="searchTable(this.value)">
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>City</th>
+                                <th>Categories</th>
+                                <th>Pickup</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+                <div class="no-data" id="noData" style="display:none;">
+                    <div class="emoji">📭</div>
+                    <p>No submissions found</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-icon">🎉</div>
+            <h2>Request Submitted!</h2>
+            <p>Your e-waste collection request has been submitted successfully.</p>
+            <div class="modal-id" id="modalRequestId">GC-XXXX</div>
+            <p style="font-size:0.83rem;">Save this ID for tracking your request.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" onclick="downloadPDF()">📄 Download PDF</button>
+                <button class="modal-btn secondary" onclick="closeModal()">✕ Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // ========== FIREBASE INIT ==========
+        let db = null;
+        let firebaseReady = false;
+
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyAmoVVXbWnEqBUPaEv8rE0Up4L9S-DvT1U",
+                authDomain: "e-waste-7e79e.firebaseapp.com",
+                databaseURL: "https://e-waste-7e79e-default-rtdb.firebaseio.com",
+                projectId: "e-waste-7e79e",
+                storageBucket: "e-waste-7e79e.firebasestorage.app",
+                messagingSenderId: "986959235753",
+                appId: "1:986959235753:web:3f9aaf046f7e504c26f7b8"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+
+            // Test connection
+            db.ref('.info/connected').on('value', function(snap) {
+                if (snap.val() === true) {
+                    firebaseReady = true;
+                    updateConnectionStatus('connected', '✅ Firebase Connected — Ready to submit');
+                    console.log('✅ Firebase connected');
+                } else {
+                    firebaseReady = false;
+                    updateConnectionStatus('disconnected', '❌ Firebase Disconnected — Check internet');
+                    console.log('❌ Firebase disconnected');
+                }
+            });
+
+            // Timeout fallback
+            setTimeout(function() {
+                if (!firebaseReady) {
+                    // Try a test write to verify
+                    db.ref('_connection_test').set({ time: Date.now() })
+                        .then(function() {
+                            firebaseReady = true;
+                            updateConnectionStatus('connected', '✅ Firebase Connected — Ready to submit');
+                            db.ref('_connection_test').remove();
+                        })
+                        .catch(function(err) {
+                            console.log('Connection test failed:', err.message);
+                            updateConnectionStatus('disconnected', '⚠️ Firebase issue: ' + err.message);
+                        });
+                }
+            }, 3000);
+
+        } catch (err) {
+            console.error('Firebase init error:', err);
+            updateConnectionStatus('disconnected', '❌ Firebase Error: ' + err.message);
+        }
+
+        function updateConnectionStatus(type, message) {
+            var el = document.getElementById('connectionStatus');
+            if (el) {
+                el.className = 'connection-status ' + type;
+                el.textContent = message;
+            }
+        }
+
+        // ========== GLOBAL ==========
+        var ADMIN_PASSWORD = "greencycle2025";
+        var lastSubmittedData = null;
+        var allSubmissions = [];
+
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set min date to tomorrow
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var dateInput = document.getElementById('pickupDate');
+            if (dateInput) {
+                dateInput.min = tomorrow.toISOString().split('T')[0];
+            }
+
+            animateCounters();
+            observeFadeElements();
+        });
+
+        // ========== NAVBAR ==========
+        window.addEventListener('scroll', function() {
+            var navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '10px 40px';
+            } else {
+                navbar.style.padding = '15px 40px';
+            }
+        });
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('mobile-open');
+        }
+
+        // ========== COUNTERS ==========
+        function animateCounters() {
+            animateCounter('counterTons', 1250);
+            animateCounter('counterUsers', 5400);
+            animateCounter('counterCities', 45);
+        }
+
+        function animateCounter(id, target) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            var current = 0;
+            var step = Math.max(1, Math.floor(target / 120));
+            var timer = setInterval(function() {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = current.toLocaleString() + '+';
+            }, 16);
+        }
+
+        // ========== FADE OBSERVER ==========
+        function observeFadeElements() {
+            if ('IntersectionObserver' in window) {
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.fade-in').forEach(function(el) {
+                    observer.observe(el);
+                });
+            } else {
+                document.querySelectorAll('.fade-in').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }
+        }
+
+        // ========== GENERATE ID ==========
+        function generateRequestId() {
+            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            var id = 'GC';
+            for (var i = 0; i < 6; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return id;
+        }
+
+        // ========== FORM SUBMIT ==========
+        function handleSubmit() {
+            var submitBtn = document.getElementById('submitBtn');
+
+            // Validate fields
+            var fullName = document.getElementById('fullName').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var address = document.getElementById('address').value.trim();
+            var city = document.getElementById('city').value.trim();
+            var pincode = document.getElementById('pincode').value.trim();
+            var pickupDate = document.getElementById('pickupDate').value;
+            var quantity = document.getElementById('quantity').value;
+            var notes = document.getElementById('notes').value.trim();
+
+            // Basic validation
+            if (!fullName) { showToast('❌ Please enter your full name', 'error'); return; }
+            if (!phone || phone.length < 10) { showToast('❌ Please enter valid 10-digit phone', 'error'); return; }
+            if (!email || !email.includes('@')) { showToast('❌ Please enter valid email', 'error'); return; }
+            if (!address) { showToast('❌ Please enter your address', 'error'); return; }
+            if (!city) { showToast('❌ Please enter your city', 'error'); return; }
+            if (!pincode || pincode.length < 6) { showToast('❌ Please enter valid 6-digit pincode', 'error'); return; }
+            if (!pickupDate) { showToast('❌ Please select pickup date', 'error'); return; }
+
+            // Get categories
+            var checkboxes = document.querySelectorAll('input[name="category"]:checked');
+            if (checkboxes.length === 0) {
+                showToast('❌ Please select at least one e-waste category', 'error');
+                return;
+            }
+
+            var categories = [];
+            checkboxes.forEach(function(cb) {
+                categories.push(cb.value);
+            });
+
+            // Check Firebase
+            if (!db) {
+                showToast('❌ Firebase not initialized. Refresh the page.', 'error');
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
+
+            var requestId = generateRequestId();
+            var now = new Date();
+
+            var data = {
+                requestId: requestId,
+                fullName: fullName,
+                phone: phone,
+                email: email,
+                address: address,
+                city: city,
+                pincode: pincode,
+                pickupDate: pickupDate,
+                categories: categories,
+                quantity: quantity,
+                notes: notes,
+                status: 'Pending',
+                submittedAt: now.toISOString(),
+                submittedDate: now.toLocaleDateString('en-IN'),
+                submittedTime: now.toLocaleTimeString('en-IN')
+            };
+
+            console.log('📤 Submitting data:', data);
+
+            // Write to Firebase
+            db.ref('ewaste_submissions/' + requestId).set(data)
+                .then(function() {
+                    console.log('✅ Data saved successfully!');
+                    lastSubmittedData = data;
+
+                    // Show success modal
+                    document.getElementById('modalRequestId').textContent = requestId;
+                    document.getElementById('successModal').classList.add('active');
+
+                    // Reset form
+                    document.getElementById('ewasteForm').reset();
+                    document.querySelectorAll('input[name="category"]').forEach(function(cb) {
+                        cb.checked = false;
+                    });
+
+                    showToast('✅ E-Waste request submitted successfully!', 'success');
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '♻️ Submit E-Waste Request';
+                })
+                .catch(function(error) {
+                    console.error('❌ Firebase write error:', error);
+                    console.error('Error code:', error.code);
+                    console.error('Error message:', error.message);
+
+                    var errorMsg = 'Error: ' + error.message;
+
+                    if (error.code === 'PERMISSION_DENIED') {
+                        errorMsg = '❌ Permission denied! Update Firebase rules (see below)';
+                    }
+
+                    showToast(errorMsg, 'error');
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '♻️ Submit E-Waste Request';
+                });
+        }
+
+        // ========== PDF DOWNLOAD ==========
+        function downloadPDF() {
+            if (!lastSubmittedData) {
+                showToast('❌ No data available for PDF', 'error');
+                return;
+            }
+
+            try {
+                var jsPDF = window.jspdf.jsPDF;
+                var doc = new jsPDF();
+                var d = lastSubmittedData;
+
+                // Green header
+                doc.setFillColor(0, 180, 100);
+                doc.rect(0, 0, 210, 40, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(24);
+                doc.setFont('helvetica', 'bold');
+                doc.text('GreenCycle', 105, 18, { align: 'center' });
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'normal');
+                doc.text('E-Waste Collection Receipt', 105, 28, { align: 'center' });
+
+                // Request ID
+                doc.setFillColor(235, 245, 235);
+                doc.roundedRect(55, 48, 100, 14, 3, 3, 'F');
+                doc.setTextColor(0, 130, 70);
+                doc.setFontSize(13);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Request ID: ' + d.requestId, 105, 57, { align: 'center' });
+
+                // Details title
+                doc.setTextColor(40, 40, 40);
+                doc.setFontSize(13);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Submission Details', 20, 80);
+                doc.setDrawColor(0, 180, 100);
+                doc.setLineWidth(0.8);
+                doc.line(20, 84, 190, 84);
+
+                // Details list
+                var details = [
+                    ['Full Name', d.fullName],
+                    ['Phone', d.phone],
+                    ['Email', d.email],
+                    ['Address', d.address],
+                    ['City', d.city],
+                    ['Pincode', d.pincode],
+                    ['Pickup Date', d.pickupDate],
+                    ['Quantity', d.quantity],
+                    ['Categories', d.categories.join(', ')],
+                    ['Status', d.status],
+                    ['Submitted', d.submittedDate + ' at ' + d.submittedTime]
+                ];
+
+                var y = 95;
+                doc.setFontSize(10);
+
+                details.forEach(function(item) {
+                    if (y > 265) {
+                        doc.addPage();
+                        y = 20;
+                    }
+
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(item[0] + ':', 20, y);
+
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(30, 30, 30);
+                    var lines = doc.splitTextToSize(String(item[1] || '-'), 115);
+                    doc.text(lines, 70, y);
+                    y += (lines.length * 6) + 4;
+                });
+
+                // Notes
+                if (d.notes) {
+                    y += 5;
+                    if (y > 250) { doc.addPage(); y = 20; }
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(100, 100, 100);
+                    doc.text('Notes:', 20, y);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(30, 30, 30);
+                    var noteLines = doc.splitTextToSize(d.notes, 160);
+                    doc.text(noteLines, 20, y + 7);
+                    y += (noteLines.length * 6) + 15;
+                }
+
+                // Footer
+                y += 10;
+                if (y > 270) { doc.addPage(); y = 20; }
+                doc.setDrawColor(200, 200, 200);
+                doc.line(20, y, 190, y);
+                y += 8;
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text('Auto-generated receipt from GreenCycle E-Waste Collection Platform', 105, y, { align: 'center' });
+                doc.text('Contact: info@greencycle.in | +91 98765 43210', 105, y + 5, { align: 'center' });
+                doc.text('Thank you for contributing to a greener planet!', 105, y + 12, { align: 'center' });
+
+                // Save
+                doc.save('GreenCycle_' + d.requestId + '.pdf');
+                showToast('📄 PDF downloaded successfully!', 'success');
+
+            } catch (err) {
+                console.error('PDF error:', err);
+                showToast('❌ PDF generation error: ' + err.message, 'error');
+            }
+        }
+
+        // ========== MODAL ==========
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
+
+        // ========== NAVIGATION ==========
+        function showMain() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('adminSection').classList.remove('active');
+            document.getElementById('adminDashboard').classList.remove('active');
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('navLinks').classList.remove('mobile-open');
+            window.scrollTo(0, 0);
+        }
+
+        function showAdmin() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('adminSection').classList.add('active');
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminDashboard').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('navLinks').classList.remove('mobile-open');
+            window.scrollTo(0, 0);
+        }
+
+        // ========== ADMIN ==========
+        function loginAdmin() {
+            var pw = document.getElementById('adminPassword').value;
+            if (pw === ADMIN_PASSWORD) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').classList.add('active');
+                document.getElementById('loginError').classList.remove('show');
+                loadAdminData();
+                showToast('✅ Admin login successful!', 'success');
+            } else {
+                document.getElementById('loginError').classList.add('show');
+                showToast('❌ Wrong password!', 'error');
+            }
+        }
+
+        function logoutAdmin() {
+            showMain();
+            showToast('👋 Logged out!', 'success');
+        }
+
+        function loadAdminData() {
+            if (!db) {
+                showToast('❌ Firebase not connected', 'error');
+                return;
+            }
+
+            db.ref('ewaste_submissions').once('value')
+                .then(function(snapshot) {
+                    var data = snapshot.val();
+                    allSubmissions = [];
+
+                    if (data) {
+                        Object.keys(data).forEach(function(key) {
+                            allSubmissions.push(data[key]);
+                        });
+                    }
+
+                    // Sort newest first
+                    allSubmissions.sort(function(a, b) {
+                        return new Date(b.submittedAt) - new Date(a.submittedAt);
+                    });
+
+                    updateDashboardStats();
+                    renderTable(allSubmissions);
+                })
+                .catch(function(err) {
+                    console.error('Load error:', err);
+                    showToast('❌ Error loading data: ' + err.message, 'error');
+                });
+        }
+
+        function updateDashboardStats() {
+            var total = allSubmissions.length;
+            var pending = allSubmissions.filter(function(s) { return s.status === 'Pending'; }).length;
+            var collected = allSubmissions.filter(function(s) { return s.status === 'Collected'; }).length;
+
+            var citySet = {};
+            allSubmissions.forEach(function(s) {
+                if (s.city) citySet[s.city.toLowerCase()] = true;
+            });
+            var cities = Object.keys(citySet).length;
+
+            document.getElementById('totalRequests').textContent = total;
+            document.getElementById('pendingRequests').textContent = pending;
+            document.getElementById('collectedRequests').textContent = collected;
+            document.getElementById('totalCities').textContent = cities;
+        }
+
+        function renderTable(data) {
+            var tbody = document.getElementById('tableBody');
+            var noData = document.getElementById('noData');
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '';
+                noData.style.display = 'block';
+                return;
+            }
+
+            noData.style.display = 'none';
+
+            var html = '';
+            data.forEach(function(item) {
+                var cats = item.categories ? item.categories.join(', ') : '-';
+                var statusClass = item.status === 'Collected' ? 'status-collected' : 'status-pending';
+                var toggleText = item.status === 'Pending' ? '✅ Collect' : '⏳ Pending';
+
+                html += '<tr>';
+                html += '<td><strong style="color:#00ff88">' + item.requestId + '</strong></td>';
+                html += '<td>' + (item.fullName || '-') + '</td>';
+                html += '<td>' + (item.phone || '-') + '</td>';
+                html += '<td>' + (item.city || '-') + '</td>';
+                html += '<td style="max-width:180px;font-size:0.78rem;">' + cats + '</td>';
+                html += '<td>' + (item.pickupDate || '-') + '</td>';
+                html += '<td><span class="status-badge ' + statusClass + '">' + item.status + '</span></td>';
+                html += '<td>';
+                html += '<button class="action-btn" onclick="toggleStatus(\'' + item.requestId + '\',\'' + item.status + '\')">' + toggleText + '</button>';
+                html += '<button class="action-btn delete" onclick="deleteEntry(\'' + item.requestId + '\')">🗑️</button>';
+                html += '</td>';
+                html += '</tr>';
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        function searchTable(query) {
+            query = query.toLowerCase();
+            var filtered = allSubmissions.filter(function(item) {
+                return (item.fullName && item.fullName.toLowerCase().includes(query)) ||
+                       (item.city && item.city.toLowerCase().includes(query)) ||
+                       (item.requestId && item.requestId.toLowerCase().includes(query)) ||
+                       (item.phone && item.phone.includes(query));
+            });
+            renderTable(filtered);
+        }
+
+        function toggleStatus(requestId, currentStatus) {
+            var newStatus = currentStatus === 'Pending' ? 'Collected' : 'Pending';
+            db.ref('ewaste_submissions/' + requestId).update({ status: newStatus })
+                .then(function() {
+                    loadAdminData();
+                    showToast('✅ Status → ' + newStatus, 'success');
+                })
+                .catch(function(err) {
+                    showToast('❌ Error: ' + err.message, 'error');
+                });
+        }
+
+        function deleteEntry(requestId) {
+            if (confirm('Delete request ' + requestId + '?')) {
+                db.ref('ewaste_submissions/' + requestId).remove()
+                    .then(function() {
+                        loadAdminData();
+                        showToast('🗑️ Deleted!', 'success');
+                    })
+                    .catch(function(err) {
+                        showToast('❌ Error: ' + err.message, 'error');
+                    });
+            }
+        }
+
+        // ========== TOAST ==========
+        function showToast(message, type) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                if (href && href !== '#' && href.length > 1) {
+                    var target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        document.getElementById('navLinks').classList.remove('mobile-open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
